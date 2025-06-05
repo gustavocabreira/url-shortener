@@ -20,7 +20,6 @@ final class AppServiceProvider extends ServiceProvider
     {
         $this->configureCommands();
         $this->configureModels();
-        $this->configurePasswordValidation();
         $this->configureDates();
     }
 
@@ -57,13 +56,5 @@ final class AppServiceProvider extends ServiceProvider
     {
         Model::shouldBeStrict(! $this->app->isProduction());
         Model::unguard();
-    }
-
-    /**
-     * Configure the password validation rules.
-     */
-    private function configurePasswordValidation(): void
-    {
-        Password::defaults(fn () => $this->app->isProduction() ? Password::min(8)->uncompromised() : null);
     }
 }
