@@ -1,4 +1,4 @@
-name: "Run tests"
+name: Run tests
 
 on:
   push:
@@ -22,13 +22,13 @@ jobs:
           extensions: mbstring, pdo, pdo_mysql
           coverage: none
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress --optimize-autoloader
 
-      - name: Generate .env
+      - name: Copy .env file
         run: cp .env.example .env
-        
-      - name: Generate key
+
+      - name: Generate application key
         run: php artisan key:generate
 
       - name: Run tests
