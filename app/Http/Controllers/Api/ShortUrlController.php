@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ShortUrl;
 use App\Services\ConsistentHasher;
+use App\Services\HashGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,10 @@ final class ShortUrlController extends Controller
             'original_url' => ['required', 'url'],
         ]);
 
-        $hash = mb_substr(hash('sha256', $validated['original_url']), 0, 8);
+        $hash = HashGenerator::generate(
+            originalUrl: $validated['original_url'],
+            userId: Auth::user()->id
+        );
 
         $shards = config('shards.connections');
         $hasher = new ConsistentHasher($shards);

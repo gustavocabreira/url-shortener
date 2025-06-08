@@ -30,7 +30,7 @@ it('stores a short URL in the correct shard', function () {
 });
 
 it('returns 409 if short URL already exists', function () {
-    $hash = mb_substr(hash('sha256', $this->payload['original_url']), 0, 8);
+    $hash = mb_substr(hash('sha256', $this->payload['original_url'].$this->user->id), 0, 8);
 
     ShortUrl::on($this->shard)->create([
         'user_id' => $this->user->id,
