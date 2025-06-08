@@ -60,7 +60,7 @@
         ],
         "test": [
             "./vendor/bin/pint --test",
-            "./vendor/bin/pest --colors=always"
+            "php artisan test --colors=always --parallel"
         ]
     },
     "extra": {
