@@ -53,6 +53,30 @@ until docker compose logs mysql | grep -q "ready for connections"; do
 done
 echo "Database is ready to use after $counter seconds."
 
+# Wait for the MySQL Database container to be ready
+until docker compose logs mysql-shard-1 | grep -q "ready for connections"; do
+    echo "Waiting Shard 1 Database setup...${counter}s"
+    sleep 5
+    counter=$((counter + 5))
+done
+echo "Shard 1 Database is ready to use after $counter seconds."
+
+# Wait for the MySQL Database container to be ready
+until docker compose logs mysql-shard-2 | grep -q "ready for connections"; do
+    echo "Waiting Shard 2 Database setup...${counter}s"
+    sleep 5
+    counter=$((counter + 5))
+done
+echo "Shard 2 Database is ready to use after $counter seconds."
+
+# Wait for the MySQL Database container to be ready
+until docker compose logs mysql-shard-3 | grep -q "ready for connections"; do
+    echo "Waiting Shard 3 Database setup...${counter}s"
+    sleep 5
+    counter=$((counter + 5))
+done
+echo "Shard 3 Database is ready to use after $counter seconds."
+
 docker compose cp .env laravel:/var/www/
 docker compose cp laravel:/var/www/.env .env
 docker compose exec -t laravel composer install
