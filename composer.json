@@ -64,7 +64,8 @@
             "./vendor/bin/pint --test",
             "php artisan test --colors=always --parallel"
         ],
-        "rector:dirty": "vendor/bin/rector process $(git diff --name-only --diff-filter=ACM | grep -E '\\.php$')"
+        "rector:dirty": "vendor/bin/rector process $(git diff --name-only --diff-filter=ACM | grep -E '\\.php$')",
+        "rector:ci": "vendor/bin/rector process --dry-run"
     },
     "extra": {
         "laravel": {
