@@ -8,10 +8,8 @@ final class ConsistentHasher
 {
     private array $ring = [];
 
-    private array $shardMap = [];
-
     public function __construct(
-        private array $shards,
+        array $shards,
         private int $virtualNodes = 100
     ) {
         $this->virtualNodes = $virtualNodes;
@@ -24,7 +22,6 @@ final class ConsistentHasher
         }
 
         ksort($this->ring);
-        $this->shardMap = array_values($this->ring);
     }
 
     public function getShard(string $key): string

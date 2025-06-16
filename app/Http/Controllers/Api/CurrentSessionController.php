@@ -12,9 +12,9 @@ use Illuminate\Http\Response;
 
 final class CurrentSessionController extends Controller
 {
-    public function store(LoginRequest $request): JsonResponse
+    public function store(LoginRequest $loginRequest): JsonResponse
     {
-        if (! auth()->attempt($request->validated())) {
+        if (! auth()->attempt($loginRequest->validated())) {
             return response()->json(['message' => 'The provided credentials are incorrect.'], Response::HTTP_UNAUTHORIZED);
         }
 

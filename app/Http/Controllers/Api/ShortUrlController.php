@@ -25,20 +25,18 @@ final class ShortUrlController extends Controller
         );
 
         $shards = config('shards.connections');
-        $hasher = new ConsistentHasher($shards);
+        $consistentHasher = new ConsistentHasher($shards);
 
-        $shard = $hasher->getShard($hash);
+        $shard = $consistentHasher->getShard($hash);
 
         if (ShortUrl::on($shard)->where('hash', $hash)->exists()) {
             return response()->json(['message' => 'Short URL already exists'], 409);
         }
 
-        $shortUrl = ShortUrl::on($shard)->create([
+        return ShortUrl::on($shard)->create([
             'user_id' => Auth::user()->id,
             'hash' => $hash,
             'original_url' => $validated['original_url'],
         ]);
-
-        return $shortUrl;
     }
 }

@@ -5,13 +5,13 @@ declare(strict_types=1);
 use App\Models\User;
 use App\Services\HashGenerator;
 
-it('generates a hash', function () {
+it('generates a hash', function (): void {
     $user = User::factory()->create();
     $hash = HashGenerator::generate('https://example.com', $user->id);
     expect($hash)->toBe('614fb008');
 });
 
-it('should not generate the same hash for different users', function () {
+it('should not generate the same hash for different users', function (): void {
     $user1 = User::factory()->create();
     $user2 = User::factory()->create();
 

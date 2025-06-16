@@ -16,15 +16,15 @@ return new class extends Migration
         $shards = config('shards.connections');
 
         foreach ($shards as $shard) {
-            Schema::connection($shard)->create('short_urls', function (Blueprint $table) {
-                $table->id();
-                $table->unsignedBigInteger('user_id');
-                $table->string('hash', 8)->unique();
-                $table->text('original_url');
-                $table->timestamps();
+            Schema::connection($shard)->create('short_urls', function (Blueprint $blueprint): void {
+                $blueprint->id();
+                $blueprint->unsignedBigInteger('user_id');
+                $blueprint->string('hash', 8)->unique();
+                $blueprint->text('original_url');
+                $blueprint->timestamps();
 
-                $table->index('user_id');
-                $table->index('hash');
+                $blueprint->index('user_id');
+                $blueprint->index('hash');
             });
         }
     }

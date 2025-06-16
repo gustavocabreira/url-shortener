@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Models\User;
 use Illuminate\Http\Response;
 
-it('should be able to generate a new access token', function () {
+it('should be able to generate a new access token', function (): void {
     $user = User::factory()->create();
 
     $payload = [
@@ -19,7 +19,7 @@ it('should be able to generate a new access token', function () {
         ->and($response->json('token'))->toBeString();
 });
 
-it('should not be able to generate a new access token with invalid payload', function () {
+it('should not be able to generate a new access token with invalid payload', function (): void {
     $payload = [
         'email' => '',
         'password' => '',
@@ -32,7 +32,7 @@ it('should not be able to generate a new access token with invalid payload', fun
         ->and($response->json('errors.password'))->toBe(['The password field is required.']);
 });
 
-it('should not be able to generate a new access token with invalid credentials', function () {
+it('should not be able to generate a new access token with invalid credentials', function (): void {
     User::factory()->create();
 
     $payload = [
