@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ShortUrl\StoreRequest;
 use App\Models\ShortUrl;
 use App\Services\ConsistentHasher;
 use App\Services\HashGenerator;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 final class ShortUrlController extends Controller
 {
-    public function store(Request $request)
+    public function store(StoreRequest $storeRequest): JsonResource
     {
-        $validated = $request->validate([
-            'original_url' => ['required', 'url'],
-        ]);
+        $validated = $storeRequest->validated();
 
         $hash = HashGenerator::generate(
             originalUrl: $validated['original_url'],
@@ -30,13 +30,13 @@ final class ShortUrlController extends Controller
         $shard = $consistentHasher->getShard($hash);
 
         if (ShortUrl::on($shard)->where('hash', $hash)->exists()) {
-            return response()->json(['message' => 'Short URL already exists'], 409);
+            throw new ConflictHttpException('Short URL already exists');
         }
 
         return ShortUrl::on($shard)->create([
             'user_id' => Auth::user()->id,
             'hash' => $hash,
             'original_url' => $validated['original_url'],
-        ]);
+        ])->toResource();
     }
 }
