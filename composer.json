@@ -18,13 +18,15 @@
         "nunomaduro/essentials": "^0.1"
     },
     "require-dev": {
+        "driftingly/rector-laravel": "^2.0",
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "pestphp/pest": "^3.8"
+        "pestphp/pest": "^3.8",
+        "rector/rector": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -60,8 +62,10 @@
         ],
         "test": [
             "./vendor/bin/pint --test",
-            "./vendor/bin/pest --colors=always"
-        ]
+            "php artisan test --colors=always --parallel"
+        ],
+        "rector:dirty": "vendor/bin/rector process $(git diff --name-only --diff-filter=ACM | grep -E '\\.php$')",
+        "rector:ci": "vendor/bin/rector process --dry-run"
     },
     "extra": {
         "laravel": {

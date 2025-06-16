@@ -13,9 +13,9 @@ use Illuminate\Http\Response;
 
 final class UserController extends Controller
 {
-    public function store(RegisterRequest $request): JsonResponse
+    public function store(RegisterRequest $registerRequest): JsonResponse
     {
-        $user = User::query()->create($request->validated());
+        $user = User::query()->create($registerRequest->validated());
 
         return response()->json(new UserResource($user), Response::HTTP_CREATED);
     }

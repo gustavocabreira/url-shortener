@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Models\User;
 use Illuminate\Http\Response;
 
-it('should be able to create a new user', function () {
+it('should be able to create a new user', function (): void {
     $payload = [
         'name' => 'John Doe',
         'email' => 'john@example.com',
@@ -26,7 +26,7 @@ it('should be able to create a new user', function () {
         ->and($newUser->email)->toBe($payload['email']);
 });
 
-it('should not be able to create a new user with an existing email', function () {
+it('should not be able to create a new user with an existing email', function (): void {
     $existingUser = User::factory()->create();
 
     $payload = [
@@ -44,7 +44,7 @@ it('should not be able to create a new user with an existing email', function ()
     expect(User::count())->toBe(1);
 });
 
-it('should not be able to create a new user with invalid data', function () {
+it('should not be able to create a new user with invalid data', function (): void {
     $payload = [
         'name' => '',
         'email' => '',
@@ -60,7 +60,7 @@ it('should not be able to create a new user with invalid data', function () {
         ->and($response->json('errors.password'))->toBe(['The password field is required.']);
 });
 
-it('should not be able to create a new user with invalid password', function () {
+it('should not be able to create a new user with invalid password', function (): void {
     $payload = [
         'name' => 'John Doe',
         'email' => 'john@example.com',
@@ -79,7 +79,7 @@ it('should not be able to create a new user with invalid password', function () 
         ]);
 });
 
-it('should not be able to create a new user with invalid password confirmation', function () {
+it('should not be able to create a new user with invalid password confirmation', function (): void {
     $payload = [
         'name' => 'John Doe',
         'email' => 'john@example.com',
