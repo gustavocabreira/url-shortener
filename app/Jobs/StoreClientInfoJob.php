@@ -21,7 +21,7 @@ final class StoreClientInfoJob implements ShouldQueue
     public function __construct(
         public ShortUrl $shortUrl,
         public string $ip,
-        private ?UserAgentParser $userAgentParser = null,
+        public UserAgentParser $userAgentParser,
     ) {
         //
     }
@@ -62,6 +62,8 @@ final class StoreClientInfoJob implements ShouldQueue
             'lat' => data_get($response, 'lat'),
             'lon' => data_get($response, 'lon'),
         ];
+
+        // dd($payload);
 
         $payload['user_ip'] = $ip;
 
