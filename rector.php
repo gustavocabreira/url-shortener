@@ -42,5 +42,5 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     // Define PHP version for Rector
-    $rectorConfig->phpVersion(PhpVersion::PHP_83);
+    $rectorConfig->phpVersion(PhpVersion::PHP_84);
 };

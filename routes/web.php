@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Web\RedirectController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::name('web.')->group(function (): void {
+    Route::get('/q/{hash}', RedirectController::class)->name('redirect.show');
 });
