@@ -11,4 +11,8 @@ final class ShortUrl extends Model
 {
     /** @use HasFactory<\Database\Factories\ShortUrlFactory> */
     use HasFactory;
+
+    protected $hidden = [
+        'id',
+    ];
 }

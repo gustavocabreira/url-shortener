@@ -22,4 +22,11 @@ final class ShortUrlFactory extends Factory
             //
         ];
     }
+
+    public function connection(string $shard): self
+    {
+        $this->model = $this->model->on($shard);
+
+        return $this;
+    }
 }
