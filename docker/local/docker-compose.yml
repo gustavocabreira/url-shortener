@@ -78,6 +78,33 @@ services:
         networks:
             - internal
 
+    mysql-shard-4:
+        container_name: ${APP_NAME}-mysql-shard-4
+        image: mysql:8.4.0
+        ports:
+            - 3310:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: 'password'
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_DATABASE: 'laravel'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        volumes:
+            - 'shard-4-data:/var/lib/mysql'
+        networks:
+            - internal
+
+    redis:
+        container_name: ${APP_NAME}-redis
+        image: redis:latest
+        ports:
+            - 6379:6379
+        networks:
+            - internal
+        env_file:
+            - ./.env
+        volumes:
+            - redis-data:/data
+
     nginx:
         container_name: ${APP_NAME}-nginx
         image: nginx:stable
@@ -109,3 +136,7 @@ volumes:
         name: ${APP_NAME}-shard-2-db
     shard-3-data:
         name: ${APP_NAME}-shard-3-db
+    shard-4-data:
+        name: ${APP_NAME}-shard-4-db
+    redis-data:
+        name: ${APP_NAME}-redis-data

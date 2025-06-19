@@ -124,6 +124,26 @@ return [
             ]) : [],
         ],
 
+        'shard_4' => [
+            'driver' => env('DB_SHARD1_DRIVER', 'mysql'),
+            'url' => env('DB_SHARD4_URL'),
+            'host' => env('DB_SHARD4_HOST', '327.0.0.3'),
+            'port' => env('DB_SHARD4_PORT', '3306'),
+            'database' => env('DB_SHARD4_DATABASE', 'laravel'),
+            'username' => env('DB_SHARD4_USERNAME', 'root'),
+            'password' => env('DB_SHARD4_PASSWORD', ''),
+            'unix_socket' => env('DB_SHARD4_SOCKET', ''),
+            'charset' => env('DB_SHARD4_CHARSET', 'utf8mb4'),
+            'collation' => env('DB_SHARD4_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),

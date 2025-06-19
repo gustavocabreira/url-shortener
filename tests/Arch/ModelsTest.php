@@ -9,6 +9,7 @@ arch('Models')
     ->toOnlyBeUsedIn([
         'App\Console',
         'App\Http',
+        'App\Jobs',
         'App\Models',
         'App\Providers',
         'Database\Factories',
