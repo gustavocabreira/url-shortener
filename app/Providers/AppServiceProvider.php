@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Services\ConsistentHasher;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
@@ -20,6 +21,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->configureCommands();
         $this->configureModels();
         $this->configureDates();
+        $this->bindConsistentHasher();
     }
 
     /**
@@ -55,5 +57,14 @@ final class AppServiceProvider extends ServiceProvider
     {
         Model::shouldBeStrict(! $this->app->isProduction());
         Model::unguard();
+    }
+
+    private function bindConsistentHasher(): void
+    {
+        $this->app->singleton(ConsistentHasher::class, function (): ConsistentHasher {
+            $shards = config('shards.connections');
+
+            return new ConsistentHasher($shards);
+        });
     }
 }

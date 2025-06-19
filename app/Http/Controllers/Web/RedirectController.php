@@ -11,10 +11,8 @@ use Illuminate\Http\RedirectResponse;
 
 final class RedirectController extends Controller
 {
-    public function __invoke(string $hash): RedirectResponse
+    public function __invoke(string $hash, ConsistentHasher $consistentHasher): RedirectResponse
     {
-        $shards = config('shards.connections');
-        $consistentHasher = new ConsistentHasher($shards);
         $shard = $consistentHasher->getShard($hash);
 
         $shortUrl = ShortUrl::on($shard)->where('hash', $hash)->firstOrFail();
