@@ -62,7 +62,8 @@
         ],
         "test": [
             "./vendor/bin/pint --test",
-            "php artisan test --colors=always --parallel"
+            "php artisan test --colors=always --parallel",
+            "composer rector:ci"
         ],
         "rector:dirty": "vendor/bin/rector process $(git diff --name-only --diff-filter=ACM | grep -E '\\.php$')",
         "rector:ci": "vendor/bin/rector process --dry-run"
