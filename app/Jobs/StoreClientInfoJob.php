@@ -21,7 +21,7 @@ final class StoreClientInfoJob implements ShouldQueue
     public function __construct(
         public ShortUrl $shortUrl,
         public string $ip,
-        private ?UserAgentParser $userAgentParser = null,
+        public UserAgentParser $userAgentParser,
     ) {
         //
     }
