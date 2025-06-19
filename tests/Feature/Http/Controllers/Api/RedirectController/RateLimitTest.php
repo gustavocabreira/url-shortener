@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use App\Models\User;
 use App\Services\ConsistentHasher;
+use Illuminate\Support\Facades\Queue;
 
 beforeEach(function (): void {
+    Queue::fake();
     $this->user = User::factory()->create();
     $this->shards = config('shards.connections');
     $this->payload = ['original_url' => 'https://example.com'];
