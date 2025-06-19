@@ -63,8 +63,6 @@ final class StoreClientInfoJob implements ShouldQueue
             'lon' => data_get($response, 'lon'),
         ];
 
-        // dd($payload);
-
         $payload['user_ip'] = $ip;
 
         app(Client::class)->insert(
