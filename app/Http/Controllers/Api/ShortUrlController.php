@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 final class ShortUrlController extends Controller
 {
-    public function store(StoreRequest $storeRequest): JsonResource
+    public function store(StoreRequest $storeRequest, ConsistentHasher $consistentHasher): JsonResource
     {
         $validated = $storeRequest->validated();
 
@@ -23,9 +23,6 @@ final class ShortUrlController extends Controller
             originalUrl: $validated['original_url'],
             userId: Auth::user()->id
         );
-
-        $shards = config('shards.connections');
-        $consistentHasher = new ConsistentHasher($shards);
 
         $shard = $consistentHasher->getShard($hash);
 
