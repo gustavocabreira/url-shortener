@@ -17,8 +17,8 @@ final class RedirectController extends Controller
         $consistentHasher = new ConsistentHasher($shards);
         $shard = $consistentHasher->getShard($hash);
 
-        $url = ShortUrl::on($shard)->where('hash', $hash)->firstOrFail();
+        $shortUrl = ShortUrl::on($shard)->where('hash', $hash)->firstOrFail();
 
-        return redirect($url->original_url);
+        return redirect($shortUrl->original_url);
     }
 }
